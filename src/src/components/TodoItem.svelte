@@ -1,0 +1,108 @@
+<script>
+    import {fly} from 'svelte/transition';
+    import {createEventDispatcher} from 'svelte';
+    const dispatch = createEventDispatcher();
+
+    /*  Todo Item Structure
+        {
+            todoID: 0,
+            todoText: "",
+            todoPriority: "low/medium/high",
+            todoDone: true/false
+        }
+    */
+
+   export let todoItem = {
+        todoID: 0,
+        todoText: "",
+        todoPriority: "low"
+   }
+
+   let optionsOpen = false;
+
+   const optionClicked = (id)=>{
+    switch (id) {
+        case 0:
+            dispatch("editRequest", todoItem);
+            break;
+    
+        case 1:
+            dispatch("removeRequest", todoItem);
+            break;
+
+        case 2:
+            dispatch("doneRequest", todoItem);
+            break;
+    }
+
+    optionsOpen = false;
+   }
+
+</script>
+
+<div id="todo-item" class="flex {todoItem.todoPriority}">
+    <h3>{todoItem.todoText}</h3> 
+    <svg class="settings-button" on:click={()=>{optionsOpen = !optionsOpen}} viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg"><g data-name="Layer 60" id="Layer_60"><circle cx="16" cy="16" r="1"/><path d="M16,18a2,2,0,1,1,2-2A2,2,0,0,1,16,18Zm0-2Z"/><circle cx="16" cy="5" r="1"/><path  d="M16,7a2,2,0,1,1,2-2A2,2,0,0,1,16,7Zm0-2Z"/><circle  cx="16" cy="27" r="1"/><path  d="M16,29a2,2,0,1,1,2-2A2,2,0,0,1,16,29Zm0-2Z"/></g></svg>
+    {#if optionsOpen == true}
+    <div id="todo-options" class="flex" transition:fly={{x: 6, duration: 400}}>
+        <button on:click|preventDefault={()=>{optionClicked(0);}}>Edit</button>
+        <button on:click|preventDefault={()=>{optionClicked(1);}}>Remove</button>
+        <button on:click|preventDefault={()=>{optionClicked(2);}}>Mark as Done</button>
+    </div>
+    {/if}
+</div>
+<hr>
+<style>
+    #todo-item{
+        position: relative;
+        font-size: 14pt;
+        align-items: center;
+        justify-content: space-between;
+        margin: 1rem 1rem;
+        padding: 0.8rem 1.4rem;
+        border-radius: 6px;
+    }
+
+    #todo-options{
+        position: absolute;
+        flex-direction: column;
+        right: 3.6rem;
+        gap: 0.4rem;
+        background: rgb(78, 78, 78);
+        padding: 1rem;
+        border-radius: 6px;
+        z-index: 1;
+    }
+
+    #todo-options button{
+        padding: 0.4rem 1.2rem;
+        font-family: var(--doc-font-300);
+        border-radius: 6px;
+        border: 0px;
+    }
+
+    .settings-button{
+        text-align: right;
+        height: 2.4rem;
+        margin: 0 0 0 auto;
+        fill:#101820;
+        cursor: pointer;
+        transition: fill 300ms ease;
+    }
+
+    .settings-button:hover{
+        fill: rgb(255, 255, 255);
+    }
+
+    .low{
+        background: hsl(112, 100%, 62%);
+    }
+
+    .medium{
+        background: hsl(37, 100%, 62%);
+    }
+
+    .high{
+        background: hsl(2, 94%, 62%);
+    }
+</style>

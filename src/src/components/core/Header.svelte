@@ -39,7 +39,7 @@
         mobileModalOpen = false;
     }
 </script>
-<header class="flex">
+<header class="flex doc-font-500">
     {#if mobileModalOpen == true && showHeaderNavigation == true}
         <div id="mobile-modal-menu" on:click|preventDefault={()=>{mobileModalOpen = false;}} transition:fade={{duration: modalFadeDuration}}>
             {#each headerInfo.navigationLinks as link}

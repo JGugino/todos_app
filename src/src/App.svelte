@@ -43,12 +43,12 @@
 
 <Header headerInfo={headerInfo} on:headerLinkClicked={headerLinkClicked} showHeaderNavigation={false}></Header>
 
-<main>
+<main class="doc-font-300">
 	<ContentHolder bind:currentRoute={currentRoute}></ContentHolder>
 </main>
 
 <Footer footerInfo={footerInfo}></Footer>
 
 <style>
-
+	
 </style>
