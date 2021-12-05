@@ -64,6 +64,17 @@
         saveTodos(updateAllTodosList(), getCurrentID());
     }
 
+    const saveEditedTodo = (e)=>{
+        const editedTodo = e.detail;
+        activeTodos.update(current=>{
+            const copied = [...current];
+            let foundTodo = copied.find(todo=>todo.todoID == editedTodo.todoID);
+            foundTodo = editedTodo;
+            return copied;
+        });
+        saveTodos(updateAllTodosList(), getCurrentID());
+    }
+
     const updateAllTodosList = ()=>{
         return [...$activeTodos,...$doneTodos];
     }
@@ -94,7 +105,7 @@
             <h2>Active Todos</h2>
             {#each $activeTodos as todo}
             <TodoItem todoItem={todo} on:removeRequest={()=>{removeTodo(todo);}} 
-                on:doneRequest={()=>{markTodoAsDone(todo);}}></TodoItem>
+                on:doneRequest={()=>{markTodoAsDone(todo);}} on:editRequest={saveEditedTodo}></TodoItem>
             {/each}
         </div>
         {:else if currentView == "done"}
