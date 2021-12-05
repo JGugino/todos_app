@@ -1,5 +1,6 @@
 <script>
     import {onMount} from 'svelte';
+    import {fly} from 'svelte/transition';
 
     import {getCurrentID, updateStartingID, nextID} from '../scripts/utils';
     import {saveTodos, loadTodos} from '../scripts/todoStorage';
@@ -49,6 +50,20 @@
         } 
     }
 
+    const markTodoAsDone = (todo)=>{
+        const updatedTodo = {todoID: todo.todoID, todoText: todo.todoText, todoPriority: todo.todoPriority, todoDone: true}
+
+        activeTodos.update(current=>{
+            const flitered = current.filter(cTodo => cTodo.todoID != todo.todoID);
+            return flitered;
+        });
+
+        doneTodos.update(current=>{
+            return [...current, updatedTodo];
+        });
+        saveTodos(updateAllTodosList(), getCurrentID());
+    }
+
     const updateAllTodosList = ()=>{
         return [...$activeTodos,...$doneTodos];
     }
@@ -67,21 +82,27 @@
                 <option value="high">High Priority</option>
             </select>
         </div>
+        <nav class="flex">
+            <a href="#active" on:click={()=>{switchView("active");}}>Active Todos</a>
+            <a href="#done" on:click={()=>{switchView("done");}}>Done Todos</a>
+        </nav>
     </div>
 
     <div id="todos-container" class="flex">
         {#if currentView == "active"}
-        <div id="active-todos">
+        <div id="active-todos" in:fly|local={{x: 8, delay: 300, duration: 300}} out:fly|local={{x: -8, duration: 300}}>
             <h2>Active Todos</h2>
             {#each $activeTodos as todo}
-            <TodoItem todoItem={todo} on:removeRequest={()=>{removeTodo(todo);}}></TodoItem>
+            <TodoItem todoItem={todo} on:removeRequest={()=>{removeTodo(todo);}} 
+                on:doneRequest={()=>{markTodoAsDone(todo);}}></TodoItem>
             {/each}
         </div>
         {:else if currentView == "done"}
-        <div id="done-todos">
+        <div id="done-todos" in:fly|local={{x: 8, delay: 300, duration: 300}} out:fly|local={{x: -8, duration: 300}}>
             <h2>Done Todos</h2>
             {#each $doneTodos as todo}
-            <TodoItem todoItem={todo} on:removeRequest={()=>{removeTodo(todo);}}></TodoItem>
+            <TodoItem todoItem={todo} on:removeRequest={()=>{removeTodo(todo);}}
+                on:doneRequest={()=>{markTodoAsDone(todo);}}></TodoItem>
             {/each}
         </div>
         {/if}
@@ -94,6 +115,34 @@
         justify-content: center;
         align-items: center;
         flex-direction: column;
+    }
+
+    #todo-view nav{
+        margin: 1.2rem 0 0 0;
+        gap: 1.2rem;
+    }
+
+    #todo-view nav a{
+        position: relative;
+        font-size: 16pt;
+        text-decoration: none;
+        color: black;
+    }
+
+    #todo-view nav a::before{
+        content: '';
+        display: block;
+        height: 0.13em;
+        background-color: black;
+        position: absolute;
+        top: 1.6em;
+        right: 0;
+        left: 0;
+        transform: scale(0, 1);
+        transition: transform ease-in-out 260ms;
+    }
+    #todo-view nav a:hover::before{
+        transform: scale(1, 1);
     }
 
     #todo-creator{
@@ -122,9 +171,12 @@
     }
 
     #todos-container{
+        background: rgb(197, 197, 197);
         width: 100%;
         flex-direction: column;
         margin: 1.8rem 0 0 0;
+        border-radius: 6px;
+        padding: 1rem;
     }
 
     #todos-container h2{

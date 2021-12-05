@@ -16,7 +16,7 @@
 	//Info used to fill out the header component
 	const headerInfo = {
 		headerType: 'text',
-        headerText: 'Todos List',
+        headerText: 'TODOs LIST',
         headerImgSrc: './favicon.png',
         headerImgAlt: 'header logo',
         navigationLinks: [

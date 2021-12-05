@@ -15,7 +15,8 @@
    export let todoItem = {
         todoID: 0,
         todoText: "",
-        todoPriority: "low"
+        todoPriority: "low",
+        todoDone: false
    }
 
    let optionsOpen = false;
@@ -45,13 +46,17 @@
     <svg class="settings-button" on:click={()=>{optionsOpen = !optionsOpen}} viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg"><g data-name="Layer 60" id="Layer_60"><circle cx="16" cy="16" r="1"/><path d="M16,18a2,2,0,1,1,2-2A2,2,0,0,1,16,18Zm0-2Z"/><circle cx="16" cy="5" r="1"/><path  d="M16,7a2,2,0,1,1,2-2A2,2,0,0,1,16,7Zm0-2Z"/><circle  cx="16" cy="27" r="1"/><path  d="M16,29a2,2,0,1,1,2-2A2,2,0,0,1,16,29Zm0-2Z"/></g></svg>
     {#if optionsOpen == true}
     <div id="todo-options" class="flex" transition:fly={{x: 6, duration: 400}}>
+        {#if todoItem.todoDone == false}
         <button on:click|preventDefault={()=>{optionClicked(0);}}>Edit</button>
+        {/if} 
         <button on:click|preventDefault={()=>{optionClicked(1);}}>Remove</button>
+        {#if todoItem.todoDone == false}
         <button on:click|preventDefault={()=>{optionClicked(2);}}>Mark as Done</button>
+        {/if}
     </div>
     {/if}
 </div>
-<hr>
+<!-- <hr> -->
 <style>
     #todo-item{
         position: relative;
