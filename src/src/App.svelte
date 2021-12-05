@@ -17,7 +17,7 @@
 	const headerInfo = {
 		headerType: 'text',
         headerText: 'TODOs LIST',
-        headerImgSrc: './favicon.png',
+        headerImgSrc: './assets/todos_log.png',
         headerImgAlt: 'header logo',
         navigationLinks: [
             {linkId: 0, linkText: 'Link One', linkHref: '#one'}

@@ -189,7 +189,7 @@
         background: hsl(2, 94%, 54%);
     }
 
-    @media screen and (max-width: 410px){
+    @media screen and (max-width: 440px){
         .edit-input{
             padding: 0.4rem 0rem 0.4rem 0.6rem;
             width: 14rem;
