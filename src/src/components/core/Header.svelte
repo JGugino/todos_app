@@ -71,9 +71,9 @@
 <style>
 
     header{
-        --header-bg-color: rgba(0,0,0, 100%);
-        --header-primary-text-color: rgba(255,255,255, 100%);
-        --header-highlight-text-color: rgb(0, 185, 231);
+        --header-bg-color: rgb(12, 13, 31);
+        --header-primary-text-color: hsl(179, 100%, 42%);
+        --header-highlight-text-color: hsl(179, 100%, 39%);
 
         --header-padding: 2rem;
 

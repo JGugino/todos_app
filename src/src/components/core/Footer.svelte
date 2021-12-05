@@ -26,7 +26,8 @@
 
 <style>
     footer{
-        --footer-social-highlight-color: rgb(0, 185, 231);
+        --footer-social-color: rgb(12, 13, 31);
+        --footer-social-highlight-color: hsl(179, 100%, 42%);
         --footer-social-hover-delay: 300ms;
 
 
@@ -45,10 +46,18 @@
     .social-icon{
         width: 2.6rem;
         height: auto;
+        fill: var(--footer-social-color);
         transition: fill var(--footer-social-hover-delay) ease;
     }
 
     .social-icon:hover{
         fill: var(--footer-social-highlight-color);
     }
+
+    @media screen and (max-width: 380px){
+        footer h4{
+            font-size: 10pt;
+        }
+    }
+
 </style>

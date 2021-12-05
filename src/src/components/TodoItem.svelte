@@ -84,6 +84,9 @@
 
 <style>
     #todo-item{
+        --view-primary-color: rgb(12, 13, 31);
+        --view-secondary-color: hsl(179, 100%, 42%);
+
         position: relative;
         font-size: 14pt;
         margin: 1rem 1rem;
@@ -109,30 +112,40 @@
         flex-direction: column;
         right: 3.6rem;
         gap: 0.4rem;
-        background: rgb(78, 78, 78);
+        background: hsl(237, 44%, 16%);
         padding: 1rem;
         border-radius: 6px;
+        border: 1px solid var(--view-secondary-color);
         z-index: 1;
     }
 
     #todo-options button{
         padding: 0.4rem 1.2rem;
         font-family: var(--doc-font-300);
+        font-size: 12pt;
         border-radius: 6px;
-        border: 0px;
+        background: rgb(12, 13, 31);
+        color: white;
+        border: 1px solid var(--view-primary-color);
+        transition: border 300ms ease-in-out, color 300ms ease-in-out;
+    }
+
+    #todo-options button:hover{
+        color: var(--view-secondary-color);
+        border: 1px solid var(--view-secondary-color);
     }
 
     .settings-button{
         text-align: right;
         height: 2.4rem;
         margin: 0 0 0 auto;
-        fill:#101820;
+        fill:var(--view-primary-color);;
         cursor: pointer;
         transition: fill 300ms ease;
     }
 
     .settings-button:hover{
-        fill: rgb(255, 255, 255);
+        fill: var(--view-secondary-color);
     }
 
     .edit-input{
@@ -140,7 +153,18 @@
         font-family: var(--doc-font-300);
         padding: 0.4rem 2rem 0.4rem 0.6rem;
         border-radius: 6px;
-        border: 0;
+        border: 1px solid var(--view-primary-color);
+        transition: color 300ms ease-in-out, border 300ms ease-in-out;
+    }
+
+    .edit-input:hover{
+        color: var(--view-secondary-color);
+        border: 1px solid var(--view-secondary-color);
+    }
+
+    .edit-input:focus{
+        outline: none;
+        border: 1px solid var(--view-secondary-color);
     }
 
     .edit-select{
@@ -152,6 +176,20 @@
         -moz-appearance: none;
 	    -webkit-appearance: none;
         border-radius: 6px;
+        background: var(--view-primary-color);
+        color: white;
+        border: 1px solid var(--view-primary-color);
+        transition: color 300ms ease-in-out, border 300ms ease-in-out;
+    }
+
+    .edit-select:hover{
+        color: var(--view-secondary-color);
+        border: 1px solid var(--view-secondary-color);
+    }
+
+    .edit-select:focus{
+        outline: none;
+        border: 1px solid var(--view-secondary-color);
     }
 
     .edit-button{
@@ -159,7 +197,15 @@
         font-family: var(--doc-font-300);
         padding: 0.4rem 1.8rem;
         border-radius: 6px;
-        border: none;
+        background: rgb(12, 13, 31);
+        color: white;
+        border: 1px solid var(--view-primary-color);
+        transition: border 300ms ease-in-out, color 300ms ease-in-out;
+    }
+
+    .edit-button:hover{
+        color: var(--view-secondary-color);
+        border: 1px solid var(--view-secondary-color);
     }
 
     .low{

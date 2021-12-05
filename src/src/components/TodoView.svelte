@@ -102,7 +102,7 @@
     <div id="todos-container" class="flex">
         {#if currentView == "active"}
         <div id="active-todos" in:fly|local={{x: 8, delay: 300, duration: 300}} out:fly|local={{x: -8, duration: 300}}>
-            <h2>Active Todos</h2>
+            <h2 class="view-header">Active Todos</h2>
             {#each $activeTodos as todo}
             <TodoItem todoItem={todo} on:removeRequest={()=>{removeTodo(todo);}} 
                 on:doneRequest={()=>{markTodoAsDone(todo);}} on:editRequest={saveEditedTodo}></TodoItem>
@@ -110,7 +110,7 @@
         </div>
         {:else if currentView == "done"}
         <div id="done-todos" in:fly|local={{x: 8, delay: 300, duration: 300}} out:fly|local={{x: -8, duration: 300}}>
-            <h2>Done Todos</h2>
+            <h2 class="view-header">Done Todos</h2>
             {#each $doneTodos as todo}
             <TodoItem todoItem={todo} on:removeRequest={()=>{removeTodo(todo);}}
                 on:doneRequest={()=>{markTodoAsDone(todo);}}></TodoItem>
@@ -122,20 +122,24 @@
 
 <style>
     #todo-view{
-        margin: 2rem 2rem;
+        --view-primary-color: rgb(12, 13, 31);
+        --view-secondary-color: hsl(179, 100%, 42%);
+
+        margin: 2rem 0.2rem;
         justify-content: center;
         align-items: center;
         flex-direction: column;
     }
 
     #todo-view nav{
-        margin: 1.2rem 0 0 0;
+        margin: 1.8rem 0 0 0;
         gap: 1.2rem;
     }
 
     #todo-view nav a{
         position: relative;
         font-size: 16pt;
+        font-family: var(--doc-font-500);
         text-decoration: none;
         color: black;
     }
@@ -144,7 +148,7 @@
         content: '';
         display: block;
         height: 0.13em;
-        background-color: black;
+        background: var(--view-secondary-color);
         position: absolute;
         top: 1.6em;
         right: 0;
@@ -157,9 +161,14 @@
     }
 
     #todo-creator{
+        --bg-color:rgba(0,0,0,20%); 
+        width: 100%;
         flex-direction: column;
         justify-content: center;
         align-items: center;
+        background: linear-gradient(white, var(--bg-color));
+        box-shadow: 0 8rem 2rem 1rem var(--bg-color);
+        margin: 0 0 2rem 0;
     }
 
     #todo-inputs{
@@ -179,10 +188,19 @@
         -moz-appearance: none;
 	    -webkit-appearance: none;
         border-radius: 6px;
+        background: var(--view-primary-color);
+        color: white;
+        border: 1px solid var(--view-primary-color);
+        transition: color 300ms ease-in-out, border 300ms ease-in-out;
+    }
+
+    #priority-selector select:hover{
+        color: var(--view-secondary-color);
+        border: 1px solid var(--view-secondary-color);
     }
 
     #todos-container{
-        background: rgb(197, 197, 197);
+        background: var(--view-primary-color);
         width: 100%;
         flex-direction: column;
         margin: 1.8rem 0 0 0;
@@ -200,14 +218,39 @@
         font-size: 14pt;
         padding: 0.6rem 0 0.6rem 0.4rem;
         border-radius: 6px;
-        border: 1px solid lightgray;
+        border: 1px solid var(--view-primary-color);
         font-family: var(--doc-font-400);
+        transition: border 300ms ease-in-out;
+    }
+
+    .todo-input:hover{
+        border: 1px solid var(--view-secondary-color);
+    }
+
+    .todo-input:focus{
+        outline: none;
+        border: 1px solid var(--view-secondary-color);
     }
 
     .add-button{
-        padding: 0.4em 1.8em;
+        padding: 0.5em 1.8em;
         font-size: 14pt;
         font-family: var(--doc-font-300);
+        border-radius: 6px;
+        background: rgb(12, 13, 31);
+        color: white;
+        border: 1px solid var(--view-primary-color);
+        transition: border 300ms ease-in-out, color 300ms ease-in-out;
+    }
+
+    .add-button:hover{
+        color: var(--view-secondary-color);
+        border: 1px solid var(--view-secondary-color);
+    }
+
+    .view-header{
+        color: var(--view-secondary-color);
+        font-size: 28pt;
     }
 
     @media screen and (max-width: 770px){
